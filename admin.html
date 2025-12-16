@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Mi Amor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        .admin-section {
+            padding: 100px 20px;
+            min-height: 100vh;
+            background: #1a1a1a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .user-table th,
+        .user-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-table th {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+
+        .delete-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: #cc0000;
+        }
+
+        .no-users {
+            text-align: center;
+            padding: 20px;
+            color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Transition Overlay -->
+    <div class="page-transition active"></div>
+
+    <nav class="navbar">
+        <div class="logo">Admin Panel</div>
+        <div class="nav-links">
+            <a href="index.html">Volver a Inicio</a>
+        </div>
+        <a href="#" id="admin-logout" class="login-btn logged-in">Admin <i
+                class="fa-solid fa-right-from-bracket"></i></a>
+    </nav>
+
+    <section class="admin-section">
+        <div class="frame-container">
+            <div class="gold-frame">
+                <h2>Usuarios Registrados</h2>
+                <p style="font-size: 0.9em; color: #ccc;">Gestiona los usuarios que tienen acceso.</p>
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-list">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <script src="auth.js"></script>
+    <script src="admin.js"></script>
+
+</body>
+
+</html>

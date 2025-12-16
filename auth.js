@@ -100,6 +100,7 @@ function updateNavbar() {
                 // Clear Session
                 sessionStorage.removeItem('isLoggedIn');
                 sessionStorage.removeItem('currentUser');
+                sessionStorage.removeItem('isAdmin');
 
                 // Redirect to Home or Login
                 window.location.href = 'index.html';
@@ -134,6 +135,15 @@ if (loginForm) {
         const pass = document.getElementById('login-pass').value;
         const errorMsg = document.getElementById('login-error');
 
+        if (user === 'Pierito2005' && pass === 'Pierito2005') {
+            // Admin Login
+            sessionStorage.setItem('isLoggedIn', 'true');
+            sessionStorage.setItem('currentUser', user);
+            sessionStorage.setItem('isAdmin', 'true');
+            animateAndRedirect('admin.html');
+            return;
+        }
+
         const storedUser = localStorage.getItem(user);
 
         if (storedUser) {
@@ -142,6 +152,7 @@ if (loginForm) {
                 // Success
                 sessionStorage.setItem('isLoggedIn', 'true');
                 sessionStorage.setItem('currentUser', user);
+                sessionStorage.removeItem('isAdmin'); // Ensure not admin
                 // Redirect
                 animateAndRedirect('album.html');
             } else {
