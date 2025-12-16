@@ -415,23 +415,43 @@ body {
     cursor: default;
 }
 
+/* Logout Tooltip & Dropdown */
 .logout-tooltip {
     position: absolute;
     top: 100%;
     right: 0;
     background: #fff;
     color: #333;
-    padding: 12px 20px;
+    padding: 0;
+    /* Remove padding from container */
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
     display: none;
-    /* Hidden by default */
     white-space: nowrap;
-    cursor: pointer;
+    cursor: default;
+    /* Container is not clickable, items are */
     font-size: 0.9rem;
     font-weight: bold;
-    margin-top: 15px;
+    margin-top: 0px;
+    /* Removed margin to bring it closer */
     z-index: 10000;
+    overflow: hidden;
+    /* Clip corners for items */
+}
+
+.dropdown-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+    background: #f0f0f0;
+}
+
+/* Specific hover for delete button to show red background light */
+#delete-account-btn:hover {
+    background: #ffe6e6;
 }
 
 /* Arrow for tooltip */
@@ -444,17 +464,26 @@ body {
     height: 12px;
     background: #fff;
     transform: rotate(45deg);
+    z-index: -1;
+    /* Behind content but visible */
 }
 
 /* Transparent bridge */
 .logout-tooltip::after {
+    /* Transparent bridge - Wider for better diagonal hover */
     content: '';
     position: absolute;
     top: -20px;
-    left: 0;
-    width: 100%;
-    height: 20px;
+    /* Bridge the area above */
+    left: -20px;
+    /* Wider hit area left */
+    right: -20px;
+    /* Wider hit area right */
+    height: 30px;
+    /* Height to overlap button and tooltip */
     background: transparent;
+    width: auto;
+    /* Use left/right instead of width */
 }
 
 .navbar .login-btn.logged-in:hover .logout-tooltip,
@@ -462,9 +491,91 @@ body {
     display: block;
 }
 
-.logout-tooltip:hover {
-    background: #f8f8f8;
-    color: #e66a55;
-    transform: translateY(2px);
-    transition: 0.2s;
+/* Custom Modal */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 11000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.custom-modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.custom-modal-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    color: #fff;
+    max-width: 400px;
+    width: 90%;
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.custom-modal-overlay.active .custom-modal-content {
+    transform: scale(1);
+}
+
+.custom-modal-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #ff7e67;
+}
+
+.custom-modal-content p {
+    margin-bottom: 25px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-modal {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1rem;
+}
+
+.btn-confirm {
+    background: #ff4444;
+    color: #fff;
+}
+
+.btn-confirm:hover {
+    background: #cc0000;
+    transform: scale(1.05);
+}
+
+.btn-cancel {
+    background: #eee;
+    color: #333;
+}
+
+.btn-cancel:hover {
+    background: #fff;
+    transform: scale(1.05);
 }

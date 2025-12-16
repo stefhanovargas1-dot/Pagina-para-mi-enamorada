@@ -48,33 +48,57 @@ function loadUsers() {
     }
 
     if (userCount === 0) {
-        list.innerHTML = '<tr><td colspan="2" class="no-users">No hay usuarios registrados aparte del Admin.</td></tr>';
+        list.innerHTML = '<div class="no-users">No hay usuarios registrados aparte del Admin.</div>';
     }
 }
 
 function renderUserRow(container, username) {
-    const tr = document.createElement('tr');
+    const card = document.createElement('div');
+    card.className = 'user-card';
 
-    const tdName = document.createElement('td');
-    tdName.textContent = username;
+    // Username Section
+    const nameSpan = document.createElement('span');
+    nameSpan.className = 'user-name';
+    nameSpan.innerHTML = `<i class="fa-solid fa-user"></i> ${username}`;
 
-    const tdAction = document.createElement('td');
+    // Delete Button
     const deleteBtn = document.createElement('button');
     deleteBtn.className = 'delete-btn';
     deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i> Eliminar';
     deleteBtn.onclick = () => deleteUser(username);
 
-    tdAction.appendChild(deleteBtn);
-    tr.appendChild(tdName);
-    tr.appendChild(tdAction);
+    card.appendChild(nameSpan);
+    card.appendChild(deleteBtn);
 
-    container.appendChild(tr);
+    container.appendChild(card);
 }
 
 function deleteUser(username) {
-    if (confirm(`¿Estás seguro de que deseas eliminar al usuario "${username}"?`)) {
-        localStorage.removeItem(username);
-        alert('Usuario eliminado correctamente.');
-        loadUsers(); // Refresh list
+    // Use the custom modal from auth.js if available, otherwise fallback to confirm
+    if (typeof showDeleteConfirmation === 'function') {
+        showDeleteConfirmation(() => {
+            performDelete(username);
+        }, `¿Estás seguro de que deseas eliminar al usuario "${username}"?`);
+    } else {
+        if (confirm(`¿Estás seguro de que deseas eliminar al usuario "${username}"?`)) {
+            performDelete(username);
+        }
     }
+}
+
+function performDelete(username) {
+    localStorage.removeItem(username);
+    // If the deleted user happens to be the one logged in (unlikely in admin panel, but good practice)
+    if (sessionStorage.getItem('currentUser') === username) {
+        sessionStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('currentUser');
+        sessionStorage.removeItem('isAdmin');
+        window.location.href = 'index.html';
+    }
+
+    // Refresh the list immediately
+    loadUsers();
+
+    // Optional: Show a small toast/alert that it was successful?
+    // For now, the visual removal is enough feedback as requested.
 }

@@ -89,11 +89,23 @@ function updateNavbar() {
         if (!loginBtn.querySelector('.logout-tooltip')) {
             const tooltip = document.createElement('div');
             tooltip.className = 'logout-tooltip';
-            tooltip.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión';
+            tooltip.innerHTML = `
+                <div class="dropdown-item" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</div>
+            `;
+
+            // Add Delete Account ONLY if not admin
+            if (sessionStorage.getItem('isAdmin') !== 'true') {
+                tooltip.innerHTML += `
+                    <div class="dropdown-item" id="delete-account-btn" style="color: red; margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee;">
+                        <i class="fa-solid fa-user-xmark"></i> Borrar Cuenta
+                    </div>
+                `;
+            }
+
             loginBtn.appendChild(tooltip);
 
             // Logout Action
-            tooltip.addEventListener('click', (e) => {
+            tooltip.querySelector('#logout-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -105,6 +117,29 @@ function updateNavbar() {
                 // Redirect to Home or Login
                 window.location.href = 'index.html';
             });
+
+            // Delete Account Action
+            const deleteBtn = tooltip.querySelector('#delete-account-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+
+                    const currentUser = sessionStorage.getItem('currentUser');
+                    showDeleteConfirmation(() => {
+                        // Delete from Storage
+                        localStorage.removeItem(currentUser);
+
+                        // Clear Session
+                        sessionStorage.removeItem('isLoggedIn');
+                        sessionStorage.removeItem('currentUser');
+                        sessionStorage.removeItem('isAdmin');
+
+                        // Redirect to Home or Login
+                        window.location.href = 'index.html';
+                    });
+                });
+            }
         }
     }
 }
@@ -135,7 +170,7 @@ if (loginForm) {
         const pass = document.getElementById('login-pass').value;
         const errorMsg = document.getElementById('login-error');
 
-        if (user === 'Pierito2005' && pass === 'Pierito2005') {
+        if (user === 'pierito.admin' && pass === 'Pierito2005') {
             // Admin Login
             sessionStorage.setItem('isLoggedIn', 'true');
             sessionStorage.setItem('currentUser', user);
@@ -223,4 +258,58 @@ function setupToggle(toggleId, inputId) {
             }
         });
     }
+}
+
+// Custom Modal Logic
+function showDeleteConfirmation(onConfirm, message = "Estás a punto de eliminar tu cuenta permanentemente. Esta acción no se puede deshacer.") {
+    // Check if modal exists
+    let modal = document.querySelector('.custom-modal-overlay');
+
+    // Always update the text content if it exists or when creating it
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.className = 'custom-modal-overlay';
+        modal.innerHTML = `
+            <div class="custom-modal-content">
+                <h3>¿Estás seguro?</h3>
+                <p id="modal-msg">${message}</p>
+                <div class="modal-buttons">
+                    <button class="btn-modal btn-cancel">Cancelar</button>
+                    <button class="btn-modal btn-confirm">Aceptar</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Cancel action closes modal
+        const cancelBtn = modal.querySelector('.btn-cancel');
+        cancelBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // Click outside closes modal
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+    } else {
+        // Update message if reusing existing modal
+        const msgEl = modal.querySelector('#modal-msg');
+        if (msgEl) msgEl.textContent = message;
+    }
+
+    // Bind Confirm Action
+    // Note: If modal was just created, confirmBtn is inside. If existing, we need to find it again.
+    const confirmBtn = modal.querySelector('.btn-confirm');
+
+    // Remove old listeners to avoid multiple fires if reused (cloning is easiest way to wipe listeners)
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+    newConfirmBtn.addEventListener('click', () => {
+        onConfirm();
+        modal.classList.remove('active');
+    });
+
+    // Show Modal
+    setTimeout(() => modal.classList.add('active'), 10);
 }

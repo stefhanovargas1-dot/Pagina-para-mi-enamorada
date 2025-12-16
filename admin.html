@@ -25,40 +25,114 @@
             justify-content: center;
         }
 
-        .user-table {
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-            overflow: hidden;
         }
 
-        .user-table th,
-        .user-table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        .user-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            padding: 15px 25px;
+            border-radius: 50px;
+            /* Fully rounded corners */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease, background 0.2s;
         }
 
-        .user-table th {
-            background: rgba(255, 255, 255, 0.2);
-            font-weight: 600;
+        .user-card:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .user-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .delete-btn {
             background: #ff4444;
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            /* Rounded button */
             cursor: pointer;
             transition: 0.3s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(255, 68, 68, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+                background: rgba(0, 0, 0, 0.9);
+                /* Solid bg on mobile */
+            }
+
+            .navbar .nav-links {
+                gap: 15px;
+                font-size: 0.9em;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-static .name {
+                font-size: 3rem;
+            }
+
+            .hero-static .content {
+                width: 90%;
+                left: 5%;
+                text-align: center;
+            }
+
+            .slider-track {
+                gap: 15px;
+            }
+
+            .album-img {
+                width: 200px;
+                height: 300px;
+            }
+
+            .glass-form {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .user-card {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+                border-radius: 20px;
+                /* Less rounded on stack */
+            }
+
+            .delete-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         .delete-btn:hover {
             background: #cc0000;
+            transform: scale(1.05);
         }
 
         .no-users {
@@ -88,17 +162,11 @@
             <div class="gold-frame">
                 <h2>Usuarios Registrados</h2>
                 <p style="font-size: 0.9em; color: #ccc;">Gestiona los usuarios que tienen acceso.</p>
-                <table class="user-table">
-                    <thead>
-                        <tr>
-                            <th>Usuario</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="user-list">
-                        <!-- Users will be loaded here -->
-                    </tbody>
-                </table>
+                <h2>Usuarios Registrados</h2>
+                <p style="font-size: 0.9em; color: #ccc;">Gestiona los usuarios que tienen acceso.</p>
+                <div id="user-list" class="user-list">
+                    <!-- Users will be loaded here as cards -->
+                </div>
             </div>
         </div>
     </section>
