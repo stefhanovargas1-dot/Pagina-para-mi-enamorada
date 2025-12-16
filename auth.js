@@ -43,7 +43,60 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Setup Password Toggles (if on login page)
     setupToggle('toggle-login-pass', 'login-pass');
     setupToggle('toggle-signup-pass', 'signup-pass');
+
+    // 6. Setup Mobile Menu
+    setupMobileMenu();
 });
+
+function setupMobileMenu() {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+
+    // Check if hamburger already exists
+    if (!navbar.querySelector('.hamburger')) {
+        // Create Hamburger Icon
+        const hamburger = document.createElement('i');
+        hamburger.className = 'fa-solid fa-bars hamburger';
+
+        // Insert before logo (to be on the left)
+        const logo = navbar.querySelector('.logo');
+        navbar.insertBefore(hamburger, logo);
+
+        // Create Overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'menu-overlay';
+        document.body.appendChild(overlay);
+
+        // Toggle Logic
+        const navLinks = navbar.querySelector('.nav-links');
+
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            // Toggle icon
+            if (navLinks.classList.contains('active')) {
+                hamburger.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                hamburger.classList.replace('fa-xmark', 'fa-bars');
+            }
+        }
+
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent bubbling
+            toggleMenu();
+        });
+
+        // Close when clicking overlay
+        overlay.addEventListener('click', toggleMenu);
+
+        // Close when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) toggleMenu();
+            });
+        });
+    }
+}
 
 
 function animateAndRedirect(url) {
@@ -89,9 +142,22 @@ function updateNavbar() {
         if (!loginBtn.querySelector('.logout-tooltip')) {
             const tooltip = document.createElement('div');
             tooltip.className = 'logout-tooltip';
-            tooltip.innerHTML = `
+            // Build Tooltip Content
+            let tooltipHtml = '';
+
+            // 1. Admin Panel (if admin)
+            if (sessionStorage.getItem('isAdmin') === 'true') {
+                tooltipHtml += `
+                    <div class="dropdown-item" id="admin-panel-btn"><i class="fa-solid fa-screwdriver-wrench"></i> Panel Admin</div>
+                `;
+            }
+
+            // 2. Logout
+            tooltipHtml += `
                 <div class="dropdown-item" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</div>
             `;
+
+            tooltip.innerHTML = tooltipHtml;
 
             // Add Delete Account ONLY if not admin
             if (sessionStorage.getItem('isAdmin') !== 'true') {
@@ -103,6 +169,16 @@ function updateNavbar() {
             }
 
             loginBtn.appendChild(tooltip);
+
+            // Admin Panel Action
+            const adminBtn = tooltip.querySelector('#admin-panel-btn');
+            if (adminBtn) {
+                adminBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    window.location.href = 'admin.html';
+                });
+            }
 
             // Logout Action
             tooltip.querySelector('#logout-btn').addEventListener('click', (e) => {
