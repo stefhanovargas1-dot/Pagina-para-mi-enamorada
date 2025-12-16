@@ -579,3 +579,89 @@ body {
     background: #fff;
     transform: scale(1.05);
 }
+
+/* Global Responsive Design */
+@media (max-width: 768px) {
+
+    /* Navbar */
+    .navbar {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+        background: rgba(0, 0, 0, 0.85);
+    }
+
+    .navbar .logo {
+        font-size: 28px;
+    }
+
+    .navbar .nav-links {
+        gap: 15px;
+        font-size: 0.9rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Hero Section */
+    .hero-static .content {
+        width: 90%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .hero-static .name {
+        font-size: 3.5rem;
+    }
+
+    .hero-static .des {
+        font-size: 1.1rem;
+        margin: 0 auto 30px auto;
+    }
+
+    /* Message Section */
+    .message-section {
+        padding: 80px 15px;
+    }
+
+    .gold-frame {
+        padding: 25px;
+    }
+
+    .gold-frame p {
+        font-size: 1.1rem;
+    }
+
+    /* Album Page */
+    .album-title {
+        font-size: 2.8rem;
+        margin-top: 100px;
+        /* Space for stacked navbar */
+        text-align: center;
+        padding: 0 10px;
+    }
+
+    .album-img {
+        width: 220px;
+        height: 320px;
+    }
+
+    .slider-track {
+        gap: 20px;
+    }
+
+    /* Login/Admin Forms */
+    .glass-form {
+        width: 90%;
+        padding: 25px;
+    }
+
+    .glass-form h2 {
+        font-size: 2.5rem;
+    }
+
+    /* Login Button Adjustments */
+    .navbar .login-btn {
+        font-size: 0.9rem;
+    }
+}
