@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros Recuerdos</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Specific override for album page body */
+        body {
+            background: #fdf2f2;
+            overflow-y: hidden;
+            /* Hide main scroll for the aesthetic */
+        }
+
+        /* Make navbar text dark for visibility on light background */
+        .navbar .logo {
+            color: #333;
+        }
+
+        .navbar a {
+            color: #333;
+        }
+
+        .navbar .login-btn {
+            border-bottom: 2px solid #ff7e67;
+        }
+
+        /* Remove gradient on this page */
+        .navbar {
+            background: transparent;
+        }
+    </style>
+</head>
+
+<body class="album-body">
+
+    <!-- Transition Overlay -->
+    <div class="page-transition active"></div>
+
+    <nav class="navbar">
+        <div class="logo">Mi Amor</div>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="album.html" class="active">Album</a>
+            <a href="#">Planes</a>
+            <a href="calendario.html">Calendario</a>
+        </div>
+        <a href="login.html" class="login-btn">Ingresar</a>
+    </nav>
+
+    <div class="album-title">Nuestra Historia</div>
+
+    <div class="slider-track-container">
+        <!-- 
+            We duplicate the images to create a seamless loop.
+            Original set: img1 to img6
+            Duplicate set: img1 to img6
+        -->
+        <div class="slider-track">
+            <!-- Set 1 -->
+            <img src="./img/img 1.jpeg" class="album-img" alt="Foto 1">
+            <img src="./img/img 2.jpeg" class="album-img" alt="Foto 2">
+            <img src="./img/img 3.jpeg" class="album-img" alt="Foto 3">
+            <img src="./img/img 4.jpeg" class="album-img" alt="Foto 4">
+            <img src="./img/img 5.jpeg" class="album-img" alt="Foto 5">
+            <img src="./img/img 6.jpeg" class="album-img" alt="Foto 6">
+
+            <!-- Set 2 (Duplicate) -->
+            <img src="./img/img 1.jpeg" class="album-img" alt="Foto 1">
+            <img src="./img/img 2.jpeg" class="album-img" alt="Foto 2">
+            <img src="./img/img 3.jpeg" class="album-img" alt="Foto 3">
+            <img src="./img/img 4.jpeg" class="album-img" alt="Foto 4">
+            <img src="./img/img 5.jpeg" class="album-img" alt="Foto 5">
+            <img src="./img/img 6.jpeg" class="album-img" alt="Foto 6">
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+
+</html>

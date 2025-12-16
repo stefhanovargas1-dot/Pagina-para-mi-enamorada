@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Transition Overlay -->
+    <div class="page-transition"></div>
+
+    <div class="login-container">
+        <div class="glass-form">
+            <h2 id="form-title">Bienvenido</h2>
+
+            <!-- Login Form -->
+            <form id="login-form">
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="login-user" placeholder="Usuario" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="login-pass" placeholder="Contraseña" required>
+                    <i class="fa-solid fa-eye" id="toggle-login-pass"
+                        style="left: auto; right: 15px; cursor: pointer;"></i>
+                </div>
+                <button type="submit" class="auth-btn">Ingresar</button>
+                <div class="switch-text">
+                    ¿No tienes cuenta? <span onclick="showSignup()">Crear Usuario</span>
+                </div>
+                <div class="error-msg" id="login-error"></div>
+            </form>
+
+            <!-- Signup Form (Hidden by default) -->
+            <form id="signup-form" style="display: none;">
+                <div class="input-group">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <input type="text" id="signup-user" placeholder="Nuevo Usuario" required>
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="password" id="signup-pass" placeholder="Nueva Contraseña" required>
+                    <i class="fa-solid fa-eye" id="toggle-signup-pass"
+                        style="left: auto; right: 15px; cursor: pointer;"></i>
+                </div>
+                <button type="submit" class="auth-btn">Registrar</button>
+                <div class="switch-text">
+                    ¿Ya tienes cuenta? <span onclick="showLogin()">Iniciar Sesión</span>
+                </div>
+                <div class="success-msg" id="signup-success"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+
+</html>
