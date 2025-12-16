@@ -585,21 +585,30 @@ body {
 
     /* Navbar Layout for Mobile */
     /* Navbar Layout for Mobile - Reverted to default flex behavior or simple stack if needed */
+    /* Navbar Layout for Mobile - Reverted to default flex behavior */
     .navbar {
         padding: 15px 20px;
-        /* Keep background adjustment for readability */
         background: rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        flex-direction: column;
-        /* Stack them for "original" simple mobile view if it was column before, or row */
+        flex-direction: row;
+        /* Original horizontal layout */
+        flex-wrap: wrap;
+        /* Allow wrapping if needed */
+        justify-content: center;
+        /* Center items */
         gap: 15px;
+    }
+
+    /* Force hide hamburger if it somehow exists */
+    .hamburger,
+    .fa-bars {
+        display: none !important;
     }
 
     /* Navbar links - Reset to default visible */
     .navbar .nav-links {
-        display: flex;
-        /* Ensure it is visible */
+        display: flex !important;
         position: static;
         width: auto;
         height: auto;

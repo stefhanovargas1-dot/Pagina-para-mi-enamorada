@@ -44,7 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setupToggle('toggle-login-pass', 'login-pass');
     setupToggle('toggle-signup-pass', 'signup-pass');
 
-    // 6. Setup Mobile Menu - REMOVED
+    // 6. Failsafe: Remove any lingering hamburger menus if they exist
+    const rogueHamburger = document.querySelectorAll('.hamburger, .fa-bars');
+    rogueHamburger.forEach(el => {
+        // Only remove if it's NOT inside the admin panel user list (which uses fa-user, fa-trash, etc but NOT fa-bars usually)
+        // Actually, fa-bars is specific to the menu.
+        el.style.display = 'none';
+        el.remove();
+    });
 });
 
 
