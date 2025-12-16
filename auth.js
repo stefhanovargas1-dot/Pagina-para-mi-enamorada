@@ -44,59 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupToggle('toggle-login-pass', 'login-pass');
     setupToggle('toggle-signup-pass', 'signup-pass');
 
-    // 6. Setup Mobile Menu
-    setupMobileMenu();
+    // 6. Setup Mobile Menu - REMOVED
 });
-
-function setupMobileMenu() {
-    const navbar = document.querySelector('.navbar');
-    if (!navbar) return;
-
-    // Check if hamburger already exists
-    if (!navbar.querySelector('.hamburger')) {
-        // Create Hamburger Icon
-        const hamburger = document.createElement('i');
-        hamburger.className = 'fa-solid fa-bars hamburger';
-
-        // Insert before logo (to be on the left)
-        const logo = navbar.querySelector('.logo');
-        navbar.insertBefore(hamburger, logo);
-
-        // Create Overlay
-        const overlay = document.createElement('div');
-        overlay.className = 'menu-overlay';
-        document.body.appendChild(overlay);
-
-        // Toggle Logic
-        const navLinks = navbar.querySelector('.nav-links');
-
-        function toggleMenu() {
-            navLinks.classList.toggle('active');
-            overlay.classList.toggle('active');
-            // Toggle icon
-            if (navLinks.classList.contains('active')) {
-                hamburger.classList.replace('fa-bars', 'fa-xmark');
-            } else {
-                hamburger.classList.replace('fa-xmark', 'fa-bars');
-            }
-        }
-
-        hamburger.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent bubbling
-            toggleMenu();
-        });
-
-        // Close when clicking overlay
-        overlay.addEventListener('click', toggleMenu);
-
-        // Close when clicking a link
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinks.classList.contains('active')) toggleMenu();
-            });
-        });
-    }
-}
 
 
 function animateAndRedirect(url) {
